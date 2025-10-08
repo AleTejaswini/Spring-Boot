@@ -1,14 +1,16 @@
-package IoC;
+package IoCApplicationContext;
 
 public class OnePlus implements Mobiles {
 	
-	OnePlus(){
+	OnePlus() {
 		System.out.println("Oneplus constructor");
 	}
-
+	
+	
 	@Override
 	public void getModelAndColor() {
-		System.out.println("Model 3: Pro , Black ");
+		System.out.println("Model :3 Pro");
+		
 	}
 
 }
