@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!--> Bean using normal setter property injection -->
+	<bean id="customer1" class="SetterInjection.Customers">
+		<property name="name" value="Tejaswini" />
+		<property name="contact" value="9676393848" />
+		<property name="address">
+			<props>
+				<prop key = "Home">Ammerpet</prop>
+				<prop key = "Office">Vtcolony</prop>
+				<prop key = "Office2">Chandoor</prop>
+				<prop key = "Office2">charminar</prop>
+			</props>
+		</property>
+	</bean>
+  
+  
+  <bean id="order1" class="SetterInjection.Orders">
+		<property name="orderid" value="001" />
+		<property name="ordername" value="MacBook" />
+		<property name="customers">
+			<ref bean = "customer1" ></ref>
+		</property>
+	</bean>
+  
+
+</beans>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+   
+    <bean name="customer" class="ConstructorInjection.Customers">
+        <constructor-arg value="Teja" type="java.lang.String" index="0" />
+        <constructor-arg value="9989080265" type="long" index="1" />
+        <constructor-arg index="2">
+            <props>
+                <prop key="Home">Nalgonda</prop>
+                <prop key="Office">Hyd</prop>
+            </props>
+        </constructor-arg>
+    </bean>
+
+   
+    <bean name="customer1" class="ConstructorInjection.Customers">
+        <constructor-arg value="Dmantz" type="java.lang.String" index="0" />
+        <constructor-arg index="1">
+            <props>
+                <prop key="1">Ashwini</prop>
+                <prop key="2">Shiva</prop>
+                <prop key="3">Shashi</prop>
+            </props>
+        </constructor-arg>
+    </bean>
+
+   
+    <bean name="order" class="ConstructorInjection.Orders">
+        <constructor-arg value="001" index="0" />
+        <constructor-arg value="MacBook" index="1" />
+        <constructor-arg ref="customer" type="ConstructorInjection.Customers" index="2" />
+    </bean>
+
+</beans>
