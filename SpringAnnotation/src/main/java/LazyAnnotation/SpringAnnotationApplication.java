@@ -13,6 +13,9 @@ public class SpringAnnotationApplication {
 		System.out.println("Starts Initialization");
 		EagerLoader load = context.getBean(EagerLoader.class);
 		load.eagerload();
+		
+		LazyLoader l = context.getBean(LazyLoader.class);
+		l.lazyload();
 	}
 
 }

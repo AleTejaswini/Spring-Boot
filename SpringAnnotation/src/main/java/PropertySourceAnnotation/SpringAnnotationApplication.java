@@ -1,4 +1,4 @@
-package ComfigurationBeanAnnotation;
+package PropertySourceAnnotation;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,14 +10,12 @@ public class SpringAnnotationApplication {
 
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(SpringAnnotationApplication.class, args);
-
-		VegPizza vegpizza = context.getBean(VegPizza.class);
-		System.out.println(vegpizza.getPizza());
+	
 		
-		NonVegPizza nonvegpizza = (NonVegPizza) context.getBean("NonVegPizza");
-		System.out.println(nonvegpizza.getPizza());
-		
-
+		PropertySourceDemo p = context.getBean(PropertySourceDemo.class);
+		System.out.println(p.getStdaddress());
+		System.out.println(p.getAppname());
+		System.out.println(p.getApptopic());
 	}
 
 }

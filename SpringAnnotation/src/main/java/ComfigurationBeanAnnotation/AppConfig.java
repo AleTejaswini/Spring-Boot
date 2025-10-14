@@ -10,15 +10,15 @@ public class AppConfig {
 		return new VegPizza();
 	}
 
-	@Bean(name ="getNonVegPizza") //default bean name is method name
+	@Bean(name ="NonVegPizza") //default bean name is method name
 	public Pizza getNonVegPizza() {
 		return new NonVegPizza();
 	}
 	
-	@Bean(initMethod = "init" ,destroyMethod ="destroy")
-	public PizzaController pizzacontroller() {
-		return new PizzaController(getNonVegPizza());
-	}
+//	@Bean(initMethod = "init" ,destroyMethod ="destroy")
+//	public PizzaController pizzacontroller() {
+//		return new PizzaController(getNonVegPizza());
+//	}
 	
 	
 
