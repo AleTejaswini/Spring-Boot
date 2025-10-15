@@ -4,11 +4,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class PostMappingAnnotation {
+public class PostMsppingJSon {
 	
-	@PostMapping("/posting")
-	public String posting() {
-		return "Data posted succesfully";
+	
+	@PostMapping("/usingJSon")
+	public BookJson book() {
+		return new BookJson(3,"Python","Datatypes");
+		
 	}
 
 }

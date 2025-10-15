@@ -1,6 +1,9 @@
 package ComponentStereotypeAnnotations;
 
 public class BookJson {
+	public BookJson() {
+		super();
+	}
 	private int bookid;
 	private String bookname;
 	private String bookdesc;
