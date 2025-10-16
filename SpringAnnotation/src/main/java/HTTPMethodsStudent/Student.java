@@ -1,4 +1,4 @@
-package HTTPMethods;
+package HTTPMethodsStudent;
 
 public class Student {
     private int id;

@@ -1,15 +1,14 @@
-package HTTPMethods;
+package HTTPMethodsEmployee;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-
 @SpringBootApplication
-public class Main {
+public class EmpMain {
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext context= SpringApplication.run(Main.class, args);
-		
+		ConfigurableApplicationContext context =  SpringApplication.run(EmpMain.class, args);
+
 	}
 
 }

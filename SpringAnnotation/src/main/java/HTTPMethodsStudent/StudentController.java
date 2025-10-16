@@ -1,4 +1,4 @@
-package HTTPMethods;
+package HTTPMethodsStudent;
 
 import java.util.*;
 import org.springframework.http.*;
@@ -18,8 +18,9 @@ public class StudentController {
 
     // Get all students
     @GetMapping("/all")
-    public ResponseEntity<List<Student>> getAllStudents() {
-        return ResponseEntity.ok(new ArrayList<>(s.values()));
+    @ResponseStatus(HttpStatus.OK)
+    public List<Student> getAllStudents() {
+        return new ArrayList<>(s.values());
     }
 
     // Get student by id
@@ -30,6 +31,32 @@ public class StudentController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.ok(std);
+    }
+    
+    
+    @GetMapping("/re/{id}")
+    public ResponseEntity<?> getIdre(@PathVariable int id) {
+        Student std = s.get(id);
+
+        if (std == null) {
+            // Return 404 with your custom message
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                 .body("No data found for ID: " + id);
+        }
+
+        // Return 200 OK with student data
+        return ResponseEntity.ok(std);
+    }
+
+    
+   
+    
+    @GetMapping("/rs/{id}")
+    public Student getId(@PathVariable int id) {
+    	Student std = s.get(id);
+    	if(std==null) {
+    		 throw  new StudentNotFoundException("No data found");}
+    	return std;
     }
 
     // Add new student
