@@ -45,6 +45,8 @@ public class EmpController {
 		return ResponseEntity.ok(employee);
 
 	}
+	
+
 
 	@PostMapping("/addnewemp")
 	public ResponseEntity<Employee> addnewemp(@RequestBody Employee e) {
@@ -53,7 +55,7 @@ public class EmpController {
 	}
 
 	@PutMapping("/updateemp/{id}")
-	public ResponseEntity<Employee> updateStd(@PathVariable int id, @RequestBody Employee e) {
+	public ResponseEntity<Employee> updateemp(@PathVariable int id, @RequestBody Employee e) {
 		Employee employee = emp.get(id);
 		if (e == null)
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -64,7 +66,7 @@ public class EmpController {
 	}
 
 	@DeleteMapping("/deleteemp/{id}")
-	public ResponseEntity<Void> deleteStd(@PathVariable int id) {
+	public ResponseEntity<Void> deleteemp(@PathVariable int id) {
 		Employee employee = emp.remove(id);
 		if (employee == null)
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -72,4 +74,11 @@ public class EmpController {
 		return ResponseEntity.noContent().build();
 	}
 
+	@DeleteMapping("/deleteall")
+	public ResponseEntity<String> deleteallemp() {
+		emp.clear();
+		return ResponseEntity.ok("Deleted sucessfully");
+	}
+	
+	
 }
