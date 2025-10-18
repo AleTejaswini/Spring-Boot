@@ -5,13 +5,24 @@ public class Product {
 	private String name;
 	private double price;
 	private int quantity;
-	public Product(int id, String name, double price, int quantity) {
+	private String Category;
+	public Product(int id, String name, double price, int quantity, String category) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.quantity = quantity;
+		this.Category = category;
 	}
+	
+	public String getCategory() {
+		return Category;
+	}
+
+	public void setCategory(String category) {
+		Category = category;
+	}
+
 	public Product() {
 		super();
 		// TODO Auto-generated constructor stub
