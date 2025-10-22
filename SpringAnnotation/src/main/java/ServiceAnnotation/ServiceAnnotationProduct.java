@@ -3,6 +3,7 @@ package ServiceAnnotation;
 public class ServiceAnnotationProduct {
 	private int productid;
 	private String productname;
+	
 	public int getProductid() {
 		return productid;
 	}
