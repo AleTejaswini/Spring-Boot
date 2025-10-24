@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -33,7 +34,7 @@ public class TravelController {
 	}
 
 	@GetMapping("/getbyprice/{price}")
-	public ResponseEntity<List<TravelPackage>> getbyprice(@PathVariable double price) {
+	public ResponseEntity<?> getbyprice(@PathVariable double price) {
 		return travelservice.getbyprice(price);
 	}
 
@@ -44,19 +45,26 @@ public class TravelController {
 		return travelservice.add(t);
 	}
 
-	@PutMapping("/update/{id}")
-	public ResponseEntity<?> update(@PathVariable int id, @RequestBody TravelPackage t) {
-		return travelservice.update(id, t);
+	@PutMapping("/update/{packageid}")
+	public ResponseEntity<?> update(@PathVariable int packageid, @RequestBody TravelPackage t) {
+		return travelservice.update(packageid, t);
+	}
+	
+	@PatchMapping("/updatepatch/{packageid}")
+	public ResponseEntity<?> updatepatch(@PathVariable int packageid ,@RequestBody TravelPackage t){
+		return travelservice.updatespecific(packageid, t);
+			
 	}
 
 	@DeleteMapping("/deleteall")
-	public void deleteall() {
-		travelservice.deleteall();
+	public ResponseEntity<?>  deleteall() {
+		return travelservice.deleteall();
 	}
 
 	@DeleteMapping("/deletebyid/{id}")
-	public void deletebyid(@PathVariable int id) {
-		travelservice.deletebyid(id);
+	public ResponseEntity<?> deletebyid(@PathVariable int id) {
+		 return travelservice.deletebyid(id);
+		
 	}
 
 }

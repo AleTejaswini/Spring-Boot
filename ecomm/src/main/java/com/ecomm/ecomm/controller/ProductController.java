@@ -24,6 +24,11 @@ public class ProductController {
 	public Product getById(@PathVariable int id) {
 		return productService.getById(id);
 	}
+	
+	@GetMapping("/getbyname/{name}")
+	public List<Product> getbyname(@PathVariable String name) {
+		return productService.getbyName(name);
+	}
 
 	@PostMapping("/addnewproduct")
 	public Product addNew(@RequestBody Product p) {
@@ -35,13 +40,29 @@ public class ProductController {
 		return productService.updateProduct(id, p);
 	}
 
-	@DeleteMapping("/deletebyid/{id}")
-	public void deleteById(@PathVariable int id) {
-		productService.deleteById(id);
+	@DeleteMapping("/deletebyid/{productid}")
+	public void deleteById(@PathVariable int productid) {
+		productService.deleteById(productid);
 	}
 
 	@DeleteMapping("/deleteall")
 	public void deleteAll() {
 		productService.deleteAll();
+	}
+	
+	@DeleteMapping("/deletebyprice/{productprice}")
+	public void deletebyprice(@PathVariable double productprice) {
+		productService.deleteByprice(productprice);
+		
+	}
+	
+	@DeleteMapping("/deletebyname/{productname}")
+	public void deletebyname(@PathVariable String productname) {
+		productService.deleteByProductname(productname);
+	}
+	
+	@PatchMapping("/updatespecific/{id}")
+	public Product updatespecific(@PathVariable int id ,@RequestBody Product p) {
+		return productService.updatepatch(id, p);
 	}
 }

@@ -25,8 +25,13 @@ public class ProductService {
 	}
 
 	// Get product by ID
-	public Product getById(int id) {
-		return productRepository.findById(id).orElse(null);
+	public Product getById(int productid) {
+		return productRepository.findById(productid).orElseThrow(()->new RuntimeException("Not found"));
+	}
+	
+	// Get product by Name
+	public List<Product> getbyName(String productname){
+		return productRepository.findByProductname(productname);
 	}
 
 	// Update existing product
@@ -46,9 +51,36 @@ public class ProductService {
 	public void deleteById(int id) {
 		productRepository.deleteById(id);
 	}
+	
+	// Delete product by price
+	public void deleteByprice(double productprice) {
+		productRepository.deleteByProductprice(productprice);
+	}
+	
+	// Delete product by Name
+	public void deleteByProductname(String productname ) {
+		productRepository.deleteByProductname(productname);
+	}
 
 	// Delete all products
 	public void deleteAll() {
 		productRepository.deleteAll();
 	}
+	
+	
+	//update existing product specific value
+	public Product updatepatch(int id ,Product p) {
+		Product existing = productRepository.findById(id).orElseThrow(()->new RuntimeException ("Product not found"));
+		String n = p.getProductname();
+		Double pr =p.getProductprice();
+		Integer q = p.getProductquantity();
+		if(n != null) {
+			existing.setProductname(p.getProductname());}
+		 if(pr !=null && pr>0)
+			existing.setProductprice(p.getProductprice());
+		if (q !=null && q>0)
+			existing.setProductquantity(p.getProductquantity());
+		return productRepository.save(existing);
+	}
+	
 }

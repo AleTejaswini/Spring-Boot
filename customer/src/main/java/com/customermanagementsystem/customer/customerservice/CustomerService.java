@@ -1,7 +1,7 @@
 package com.customermanagementsystem.customer.customerservice;
 
 import java.util.List;
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +47,24 @@ public class CustomerService {
 
 	public void deletebyid(int id) {
 		customerrepository.deleteById(id);
+	}
+	
+	public Customer updatepatch(int id ,Customer c) {
+		Customer existing = customerrepository.findById(id).orElse(null);
+		String n = c.getName();
+		 String e=c.getEmail();
+		 String a=c.getAddress();
+		 String phn=c.getPhonenumber();
+		 
+		 if(n!=null)
+			 existing.setName(c.getName());
+		 if(e!=null)
+			 existing.setEmail(c.getEmail());
+		 if(a!=null)
+			 existing.setAddress(c.getAddress());
+		 if(phn!=null)
+			 existing.setPhonenumber(c.getPhonenumber());
+		 return customerrepository.save(existing);
 	}
 
 }
