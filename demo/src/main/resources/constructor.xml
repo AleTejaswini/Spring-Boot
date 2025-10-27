@@ -16,6 +16,17 @@
             </props>
         </constructor-arg>
     </bean>
+    
+      <bean name="customer2" class="ConstructorInjection.Customers">
+        <constructor-arg value="affu" type="java.lang.String" index="0" />
+        <constructor-arg value="9743963482" type="long" index="1" />
+        <constructor-arg index="2">
+            <props>
+                <prop key="Home">chandoor</prop>
+                <prop key="Office">Nalgonda</prop>
+            </props>
+        </constructor-arg>
+    </bean>
 
    
     <bean name="customer1" class="ConstructorInjection.Customers">

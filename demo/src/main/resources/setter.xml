@@ -26,6 +26,10 @@
 			<ref bean = "customer1" ></ref>
 		</property>
 	</bean>
+	
+	
+	
+	
   
 
 </beans>
