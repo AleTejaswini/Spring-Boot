@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bookpublisher.relationship.model.Author;
 import com.bookpublisher.relationship.model.Book;
 import com.bookpublisher.relationship.service.BookService;
 
@@ -45,6 +46,11 @@ public class BookController {
 	@DeleteMapping("deletebook/{bookid}")
 	public void deletebook(@PathVariable int bookid) {
 		 bookservice.delete(bookid);
+	}
+	
+	@GetMapping("getbookauthors/{bookid}")
+	public List<Author> getbookauthors(@PathVariable int bookid){
+		return bookservice.getbookauthors(bookid);
 	}
 }
 
