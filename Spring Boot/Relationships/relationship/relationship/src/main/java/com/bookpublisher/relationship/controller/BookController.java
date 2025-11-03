@@ -33,7 +33,7 @@ public class BookController {
 		return bookservice.getbyid(bookid);
 	}
 	
-	@PostMapping("/publisher/addbook")
+	@PostMapping("/addbook")
 	public Book addbook(@RequestBody Book book) {
 		return bookservice.addbook(book);
 	}
@@ -48,7 +48,7 @@ public class BookController {
 		 bookservice.delete(bookid);
 	}
 	
-	@GetMapping("getbookauthors/{bookid}")
+	@GetMapping("getbook/{bookid}/authors")
 	public List<Author> getbookauthors(@PathVariable int bookid){
 		return bookservice.getbookauthors(bookid);
 	}

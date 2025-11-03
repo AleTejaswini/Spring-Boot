@@ -10,7 +10,7 @@ public class Publisher {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int publisherid;
-	private String publishername;
+	private String publishername; 
 	public Publisher(int publisherid, String publishername) {
 		super();
 		this.publisherid = publisherid;
@@ -18,7 +18,6 @@ public class Publisher {
 	}
 	public Publisher() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public int getPublisherid() {
 		return publisherid;
@@ -32,6 +31,4 @@ public class Publisher {
 	public void setPublishername(String publishername) {
 		this.publishername = publishername;
 	}
-	
-	
 }

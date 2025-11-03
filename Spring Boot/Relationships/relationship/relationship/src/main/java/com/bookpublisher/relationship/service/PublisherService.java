@@ -8,7 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.bookpublisher.relationship.model.Author;
+import com.bookpublisher.relationship.model.Book;
 import com.bookpublisher.relationship.model.Publisher;
+import com.bookpublisher.relationship.repository.BookRepository;
 import com.bookpublisher.relationship.repository.PublisherRepository;
 
 @Service
@@ -16,6 +20,8 @@ public class PublisherService {
 
 	@Autowired
 	private PublisherRepository publisherrepository;
+	@Autowired
+	private BookRepository bookrepository;
 
 	public List<Publisher> getpublishers() {
 		List<Publisher> publishers = publisherrepository.findAll();
@@ -36,18 +42,35 @@ public class PublisherService {
 		return publisherrepository.save(publisher);
 	}
 
-	public Publisher updatepublisher(int publisherid, Publisher publisher) {
+	public Publisher updatepublisher(int publisherid, Publisher updatedpublisher) {
 		try {
-			Publisher newpublisher = publisherrepository.findById(publisherid).get();
-			newpublisher.setPublishername(publisher.getPublishername());
-			publisherrepository.save(newpublisher);
-			return newpublisher;
+			Publisher existingpublisher = publisherrepository.findById(publisherid).get();
+			existingpublisher.setPublishername(updatedpublisher.getPublishername());
+			publisherrepository.save(existingpublisher);
+			return existingpublisher;
 		} catch (Exception e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
 	}
+	
 
 	public void deletepublisher(int publisherid) {
-		publisherrepository.deleteById(publisherid);
+		Publisher publisher = publisherrepository.findById(publisherid)
+				.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		List<Book> books = bookrepository.findByPublisher(publisher);
+		for(Book book:books) {
+			for(Author author: book.getAuthors() ) {
+				author.getBooks().remove(book);
+			}
+			book.getAuthors().clear();
+		}
+			bookrepository.deleteAll(books);
+			publisherrepository.delete(publisher);
+		}
+		
+
+	  
+	      
+	
 	}
-}
+

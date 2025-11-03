@@ -57,6 +57,9 @@ public class BookService {
 			
 			Publisher completepublisher = publisherrepository.findById(publisherid).get();
 			book.setPublisher(completepublisher);
+			for (Author a : completeauthor) {
+		        a.getBooks().add(book);
+		    }
 			
 			bookrepository.save(book);
 			return book;
@@ -67,15 +70,30 @@ public class BookService {
 		}
 	}
 
-	public Book updatebook(int bookid, Book newbook) {
+	public Book updatebook(int bookid, Book updatedbook) {
 		
 		try {
 			Book existingbook = bookrepository.findById(bookid).get();
-			Publisher publisher = newbook.getPublisher();
+			Publisher publisher = updatedbook.getPublisher();
 			int publisherid = publisher.getPublisherid();
 			Publisher completepublisher = publisherrepository.findById(publisherid).get();
-			existingbook.setBookname(newbook.getBookname());
+			
+			List<Integer> authorIds = new ArrayList<>();
+			for(Author author: updatedbook.getAuthors()) {
+				authorIds.add(author.getAuthorid());
+			}
+			List<Author> completeauthor = authorrepository.findAllById(authorIds);
+			if(authorIds.size()!= completeauthor.size()) {
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"one or more authorids are invalid");
+			}
+			for (Author a : completeauthor) {
+		        a.getBooks().add(updatedbook);
+		    }
+			existingbook.setAuthors(completeauthor);
+			
+			existingbook.setBookname(updatedbook.getBookname());
 			existingbook.setPublisher(completepublisher);
+			
 			bookrepository.save(existingbook);
 			return existingbook;
 		} catch (Exception e) {
@@ -83,9 +101,23 @@ public class BookService {
 		}
 	}
 
-	public void delete(int bookid) {
-		bookrepository.deleteById(bookid);
-	}
+	public void delete(int bookid) { 
+		try {
+        Book book = bookrepository.findById(bookid).get();  
+
+        List<Author> authors = book.getAuthors();
+        for(Author author : authors) {
+            author.getBooks().remove(book);
+        }
+        authorrepository.saveAll(authors);
+        bookrepository.deleteById(bookid);
+        }
+    catch (Exception e) {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
+    throw new ResponseStatusException(HttpStatus.NO_CONTENT);
+}
+	
 	
 	public List<Author> getbookauthors(int bookid){
 		Book book = bookrepository.findById(bookid)
