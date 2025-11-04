@@ -44,6 +44,7 @@ public class GalleryService {
 			if(artistids.size() != completeartist.size()) {
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"one or more ids are invalid");
 			}
+			gallery.setArtists(completeartist);
 			for(Artist a : completeartist) {
 				a.getGalleries().add(gallery);
 			}
