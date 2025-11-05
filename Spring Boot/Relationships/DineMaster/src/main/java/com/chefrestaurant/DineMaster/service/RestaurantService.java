@@ -7,13 +7,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.chefrestaurant.DineMaster.model.Chef;
 import com.chefrestaurant.DineMaster.model.Restaurant;
+import com.chefrestaurant.DineMaster.repository.ChefRepository;
 import com.chefrestaurant.DineMaster.repository.RestaurantRepository;
 
 @Service
 public class RestaurantService {
 	@Autowired
 	private RestaurantRepository restaurantrepository;
+	
+	@Autowired
+	private ChefRepository chefrepository;
 	
 	public List<Restaurant> getrestaurants(){
 		return restaurantrepository.findAll();
@@ -41,7 +46,15 @@ public class RestaurantService {
 	}
 	
 	public void deleterestaurant(int id) {
-		restaurantrepository.deleteById(id);
+		Restaurant restaurant = restaurantrepository.findById(id)
+				.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"no restaurant with id: "+id));
+		List<Chef> chefs  = chefrepository.findByRestaurant(restaurant);
+		for(Chef chef:chefs) {
+			chef.setRestaurant(null);
+		}
+		
+		chefrepository.saveAll(chefs);
+		restaurantrepository.delete(restaurant);
 	}
 	
 }

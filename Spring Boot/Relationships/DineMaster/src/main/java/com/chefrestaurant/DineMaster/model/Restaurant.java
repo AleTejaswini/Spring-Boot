@@ -11,6 +11,8 @@ public class Restaurant {
 	private String address;
 	private String cusineType;
 	private int rating;
+	
+	
 	public Restaurant(int id, String name, String address, String cusineType, int rating) {
 		super();
 		this.id = id;

@@ -58,6 +58,8 @@ public class ChefService {
 	}
 	
 	public void deletechef(int chefid) {
-		chefrepository.deleteById(chefid);
+		Chef chef = chefrepository.findById(chefid).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		chef.setRestaurant(null);
+		chefrepository.delete(chef);
 	}
 }
