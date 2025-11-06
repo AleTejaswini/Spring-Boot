@@ -15,9 +15,11 @@ import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Artist {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int artistid;
+
 	private String artistname;
 	private String genre;
 
@@ -26,13 +28,12 @@ public class Artist {
 	@JsonIgnoreProperties("artists")
 	private List<Gallery> galleries = new ArrayList<>();
 
-	public Artist(int artistid, String artistname, String genre,List<Gallery> galleries) {
+	public Artist(int artistid, String artistname, String genre, List<Gallery> galleries) {
 		super();
 		this.artistid = artistid;
 		this.artistname = artistname;
 		this.genre = genre;
-		this.galleries=galleries;
-		
+		this.galleries = galleries;
 	}
 
 	public Artist() {
@@ -71,7 +72,5 @@ public class Artist {
 	public void setGalleries(List<Gallery> galleries) {
 		this.galleries = galleries;
 	}
-
-	
 
 }

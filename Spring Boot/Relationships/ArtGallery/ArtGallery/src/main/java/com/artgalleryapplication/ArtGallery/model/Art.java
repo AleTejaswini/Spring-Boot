@@ -1,8 +1,5 @@
 package com.artgalleryapplication.ArtGallery.model;
 
-
-
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,9 +9,11 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Art {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int artid;
+
 	private String arttitle;
 	private String theme;
 

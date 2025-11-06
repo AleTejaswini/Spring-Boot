@@ -16,17 +16,18 @@ public class Gallery {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int galleryid;
-	private String galleryname;
+
+	private String name;
 	private String location;
 
 	@ManyToMany(mappedBy = "galleries")
 	@JsonIgnoreProperties("galleries")
 	private List<Artist> artists = new ArrayList<>();
 
-	public Gallery(int galleryid, String galleryname, String location, List<Artist> artists) {
+	public Gallery(int galleryid, String name, String location, List<Artist> artists) {
 		super();
 		this.galleryid = galleryid;
-		this.galleryname = galleryname;
+		this.name = name;
 		this.location = location;
 		this.artists = artists;
 	}
@@ -44,12 +45,12 @@ public class Gallery {
 		this.galleryid = galleryid;
 	}
 
-	public String getGalleryname() {
-		return galleryname;
+	public String getName() {
+		return name;
 	}
 
-	public void setGalleryname(String galleryname) {
-		this.galleryname = galleryname;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getLocation() {
