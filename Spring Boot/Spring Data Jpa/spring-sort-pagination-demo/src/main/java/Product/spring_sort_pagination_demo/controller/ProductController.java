@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,17 @@ public class ProductController {
 		PageRequest pagerequest = PageRequest.of(pageNum, size, sort);
 		Page<Product> page = productservice.findall(pagerequest);
 
+		return page;
+	}
+	
+	
+	@GetMapping("/get")
+	public Page<Product> sortbyname(@RequestParam(name= "pagenum")  int pagenum,
+			@RequestParam(name= "size") int size,
+			@RequestParam(name= "sortby") String sortby){
+		Sort sort= Sort.by(Direction.ASC, sortby);
+		PageRequest pagerequest=PageRequest.of(pagenum, size,sort);
+		Page<Product> page=productservice.findallsortbyname(pagerequest);
 		return page;
 	}
 

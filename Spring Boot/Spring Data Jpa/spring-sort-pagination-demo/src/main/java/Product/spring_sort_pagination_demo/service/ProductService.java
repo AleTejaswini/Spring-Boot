@@ -20,5 +20,9 @@ public class ProductService {
 		return productrepository.findAll(pageable);
 	}
 	
+	public Page<Product> findallsortbyname(Pageable pageable){
+		return productrepository.findAll(pageable);
+	}
+	
 	
 }
