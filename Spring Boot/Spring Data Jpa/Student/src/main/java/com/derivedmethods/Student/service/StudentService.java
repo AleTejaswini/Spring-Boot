@@ -49,8 +49,9 @@ public class StudentService {
 	@Transactional
 	public void deletestudent(int marks){
 	studentrepository.deleteByMarksLessThan(marks);
-		
-		
-		
+	}
+	@Transactional
+	public void removeByCity(String city) {
+		studentrepository.removeByCity(city);
 	}
 }
