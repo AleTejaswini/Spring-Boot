@@ -2,10 +2,13 @@ package jpql.OrderManagement.model;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+
 
 @Entity
 public class Orders {
@@ -17,7 +20,9 @@ public class Orders {
 	private double totalAmount;
 	private LocalDate orderDate;
 	private String status;
-
+	
+	
+	
 	public Orders() {
 		super();
 		// TODO Auto-generated constructor stub

@@ -201,4 +201,14 @@ public class OrderController {
 		Pageable pageable = PageRequest.of(pagenum, size, Sort.by(sortby).ascending());
 		return orderservice.findOrdersSorted(pageable);
 	}
+	
+	
+	@GetMapping("/getOrdersWithCustomers")
+	public List<Object[]> getOrdersWithCustomers(){
+		return orderservice.getOrdersWithCustomers();
+	}
+	@GetMapping("/getCustomersWhoOrdered")
+	public List<String> getCustomersWhoOrdered(){
+		return orderservice.getCustomersWhoOrdered();
+	}
 }

@@ -153,4 +153,13 @@ public class OrderService {
 	public Page<Orders> findOrdersSorted(Pageable pageable) {
 		return orderrepository.findOrdersSorted(pageable);
 	}
+	
+	public List<Object[]> getOrdersWithCustomers(){
+		return orderrepository.getOrdersWithCustomers();
+	}
+	
+	
+	public List<String> getCustomersWhoOrdered(){
+		return orderrepository.getCustomersWhoOrdered();
+	}
 }
