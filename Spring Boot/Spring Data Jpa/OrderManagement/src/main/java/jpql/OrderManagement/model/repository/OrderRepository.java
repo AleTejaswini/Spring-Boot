@@ -121,4 +121,39 @@ public interface OrderRepository extends JpaRepository<Orders, Integer> {
 	Page<Orders> findOrdersSorted(Pageable pageable);
 
 	
+	// joins
+	@Query("select  o, c.name FROM Orders o JOIN o.customer c")
+	List<Object[]> getOrdersWithCustomerNames();
+
+//	Get order ID and customer name
+	@Query("select o.id , c.name from Orders o join o.customer c")
+	List<Object[]> getOrderIdAndCustomerName();
+	
+//	Get customer names of people who placed at least one order
+	@Query("select c.name from Orders o join o.customer c group by c.name having count(o)>1")
+	List<String> getCustomersWhoOrdered();
+	
+//	Get total order amount and corresponding customer name
+	@Query("select  c.name ,sum(o.totalAmount) from Orders o join o.customer c group by c.name")
+	List<Object[]> getOrderAmountAndCustomer();
+	
+//	Get all customers even if they do not have any order
+	@Query("select c from  Customer c left join c.orders o ")
+	List<Object[]> getAllCustomersWithOrders();
+	
+	
+//	Get number of orders placed by each customer
+	@Query("select c.name ,count(o.id) from Orders o join o.customer c group by c.name")
+	List<Object[]> countOrdersByCustomer();
+	
+//	Get only customers who placed more than 1 order
+	@Query("select c.name from Orders o join o.customer c group by c.name having count(o.id)= :numoforders")
+	List<String> getCustomersWithMultipleOrders(@Param("numoforders") int numoforders);
+	
+//	Get max order amount of each customer
+	@Query("select c.name , max(o.totalAmount) from Orders o join o.customer c group by c.name")
+	List<Object[]> getMaxOrderAmountByCustomer();
+	
+	
+
 }

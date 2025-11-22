@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import jpql.OrderManagement.model.Customer;
 import jpql.OrderManagement.model.Orders;
 import jpql.OrderManagement.model.repository.OrderRepository;
 
@@ -154,12 +156,38 @@ public class OrderService {
 		return orderrepository.findOrdersSorted(pageable);
 	}
 	
-	public List<Object[]> getOrdersWithCustomers(){
-		return orderrepository.getOrdersWithCustomers();
+	public List<Object[]> getOrdersWithCustomerNames(){
+		return orderrepository.getOrdersWithCustomerNames();
 	}
 	
+	public List<Object[]> getOrderIdAndCustomerName(){
+		return orderrepository.getOrderIdAndCustomerName();
+	}
 	
 	public List<String> getCustomersWhoOrdered(){
 		return orderrepository.getCustomersWhoOrdered();
 	}
+	
+	public List<Object[]> getOrderAmountAndCustomer(){
+		return orderrepository.getOrderAmountAndCustomer();
+	}
+	
+	public List<Object[]> getAllCustomersWithOrders(){
+		return orderrepository.getAllCustomersWithOrders();
+	}
+	
+	public List<Object[]> countOrdersByCustomer(){
+		return orderrepository.countOrdersByCustomer();
+	}
+	
+	public List<String> getCustomersWithMultipleOrders(int numoforders){
+		return orderrepository.getCustomersWithMultipleOrders(numoforders);
+	}
+	
+	public List<Object[]> getMaxOrderAmountByCustomer(){
+		return orderrepository.getMaxOrderAmountByCustomer();
+	}
+	
+	
+	
 }

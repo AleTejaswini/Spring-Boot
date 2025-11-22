@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jpql.OrderManagement.model.Customer;
 import jpql.OrderManagement.model.Orders;
 
 import jpql.OrderManagement.service.OrderService;
@@ -202,13 +203,42 @@ public class OrderController {
 		return orderservice.findOrdersSorted(pageable);
 	}
 	
-	
-	@GetMapping("/getOrdersWithCustomers")
-	public List<Object[]> getOrdersWithCustomers(){
-		return orderservice.getOrdersWithCustomers();
+	@GetMapping("/getOrdersWithCustomerNames")
+	public List<Object[]> getOrdersWithCustomerNames(){
+		return orderservice.getOrdersWithCustomerNames();
+	}
+	@GetMapping("/getOrderIdAndCustomerName")
+	public List<Object[]> getOrderIdAndCustomerName(){
+		return orderservice.getOrderIdAndCustomerName();
 	}
 	@GetMapping("/getCustomersWhoOrdered")
 	public List<String> getCustomersWhoOrdered(){
 		return orderservice.getCustomersWhoOrdered();
 	}
+	
+	@GetMapping("/getOrderAmountAndCustomer")
+	public List<Object[]> getOrderAmountAndCustomer(){
+		return orderservice.getOrderAmountAndCustomer();
+	}
+	@GetMapping("/getAllCustomersWithOrders")
+	public List<Object[]> getAllCustomersWithOrders(){
+		return orderservice.getAllCustomersWithOrders();
+	}
+	@GetMapping("/countOrdersByCustomer")
+	public List<Object[]> countOrdersByCustomer(){
+		return orderservice.countOrdersByCustomer();
+	}
+	
+	@GetMapping("/getCustomersWithMultipleOrders")
+	public List<String> getCustomersWithMultipleOrders(@RequestParam int numoforders){
+		return orderservice.getCustomersWithMultipleOrders(numoforders);
+	}
+	@GetMapping("/getMaxOrderAmountByCustomer")
+	public List<Object[]> getMaxOrderAmountByCustomer(){
+		return orderservice.getMaxOrderAmountByCustomer();
+	}
+	
+	
+	
+	
 }

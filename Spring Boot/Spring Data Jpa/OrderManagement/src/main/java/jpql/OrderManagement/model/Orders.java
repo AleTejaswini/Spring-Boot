@@ -2,16 +2,18 @@ package jpql.OrderManagement.model;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 
 @Entity
-public class Orders {
+public class Orders { //many
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
@@ -21,7 +23,10 @@ public class Orders {
 	private LocalDate orderDate;
 	private String status;
 	
-	
+	@ManyToOne
+	@JoinColumn(name="customer_id")
+	@JsonIgnoreProperties("orders")
+	private Customer customer;
 	
 	public Orders() {
 		super();
@@ -67,5 +72,15 @@ public class Orders {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+	
+	
 
 }
