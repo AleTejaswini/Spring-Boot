@@ -237,8 +237,14 @@ public class OrderController {
 	public List<Object[]> getMaxOrderAmountByCustomer(){
 		return orderservice.getMaxOrderAmountByCustomer();
 	}
-	
-	
-	
+	//Named queries
+	@GetMapping("/findordersbyname")
+	public List<Orders> findordersbyname( @RequestParam String name){
+		return orderservice.findordersbyname(name);
+	}
+	@GetMapping("/findordersbystatus")
+	public List<Orders> findordersbystatus( @RequestParam String status){
+		return orderservice.findordersbystatus(status);
+	}
 	
 }

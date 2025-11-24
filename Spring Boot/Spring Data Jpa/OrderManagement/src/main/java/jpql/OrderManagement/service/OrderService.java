@@ -188,6 +188,13 @@ public class OrderService {
 		return orderrepository.getMaxOrderAmountByCustomer();
 	}
 	
+	//named query
+	public List<Orders> findordersbyname( String name){
+		return orderrepository.findordersbyname(name);
+	}
 	
+	public List<Orders> findordersbystatus( String status){
+		return orderrepository.findordersbystatus(status);
+	}
 	
 }

@@ -155,5 +155,10 @@ public interface OrderRepository extends JpaRepository<Orders, Integer> {
 	List<Object[]> getMaxOrderAmountByCustomer();
 	
 	
-
+	
+	//named sql queries
+	@Query(name = "findordersbyname")
+	List<Orders> findordersbyname(@Param("name") String name);
+	@Query(name = "findordersbystatus")
+	List<Orders> findordersbystatus(@Param("status") String status);
 }

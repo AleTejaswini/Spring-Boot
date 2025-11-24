@@ -10,8 +10,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedNativeQuery;
 import jakarta.persistence.OneToMany;
-
+@NamedNativeQuery(name = "findbyname",
+query = "select * from customer where name =:name")
 @Entity
 public class Customer { //one
 	@Id

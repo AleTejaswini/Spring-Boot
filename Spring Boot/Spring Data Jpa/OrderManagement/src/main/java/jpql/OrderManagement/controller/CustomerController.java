@@ -3,6 +3,7 @@ package jpql.OrderManagement.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,4 +47,14 @@ public class CustomerController {
 	 public List<Object[]> getTop3CustomersByOrderCount(){
 		  return customerservice.getTop3CustomersByOrderCount();
 	  }
+	 
+	 //native sql query
+	 @GetMapping("/getallcustomer")
+		public List<Customer> getallcustomer(){
+			return customerservice.getallcustomer();
+		}
+	 @GetMapping("/findbyname")
+	 public List<Object[]> findbyname( @RequestParam String name){
+		 return customerservice.findbyname(name);
+	 }
 }

@@ -38,5 +38,14 @@ public class CustomerService {
   public List<Object[]> getTop3CustomersByOrderCount(){
 	  return customerrepository.getTop3CustomersByOrderCount();
   }
+  
+  //native sql query
+	public List<Customer> getallcustomer(){
+		return customerrepository.getallcustomer();
+	}
+	
+	 public List<Object[]> findbyname( String name){
+		 return customerrepository.findbyname(name);
+	 }
  
 }

@@ -34,4 +34,11 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
 	@Query("select c.name , count(o.id) from Customer c join c.orders o group by c.name order by count(o.id) desc limit 6")
 	List<Object[]> getTop3CustomersByOrderCount();
 	
+	
+	//using native sql query
+	@Query(value = "select * from customer " ,nativeQuery=true)
+	List<Customer> getallcustomer();
+	
+	@Query(name = "findbyname")
+	List<Object[]> findbyname(@Param("name") String name);
 }

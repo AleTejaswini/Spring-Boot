@@ -10,8 +10,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-
-
+import jakarta.persistence.NamedQuery;
+@NamedQuery(name = "findordersbyname",
+query ="select o from Orders o join o.customer c  where  c.name = :name")
+@NamedQuery(name = "findordersbystatus",
+query = "select o from Orders o where o.status = :status")
 @Entity
 public class Orders { //many
 	@Id
