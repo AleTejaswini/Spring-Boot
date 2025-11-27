@@ -17,6 +17,8 @@ import com.student.ExceptionHandling.model.Student;
 import com.student.ExceptionHandling.repository.StudentRespository;
 import com.student.ExceptionHandling.service.StudentService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/std")
 public class StudentController {
@@ -27,7 +29,7 @@ public class StudentController {
 	private StudentRespository studentrepository;
 	
 	@PostMapping("/addstudent")
-	public Student addstudent(@RequestBody Student student) {
+	public Student addstudent(@Valid @RequestBody Student student) {
 		return studentservice.addstudent(student);
 	}
 	
@@ -44,7 +46,7 @@ public class StudentController {
 	}
 	
 	@GetMapping("/findbyname")
-	public List<Student> findbyname(@RequestParam String name){
+	public List<Student> findbyname( @RequestParam String name){
 		if(!studentrepository.existsByName(name)) {
 			throw new StudentNotFound("Student not found with name :"+name);
 		}

@@ -1,9 +1,14 @@
 package com.student.ExceptionHandling.model;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 
 @Entity
@@ -13,9 +18,15 @@ public class Student {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
+	@NotBlank(message="Name cannot be null")
 	private String name;
+	
+	@Email(message ="Invalid email")
 	private String email;
+	
+	@Min(value=18 ,message="Age should be greater than 18")
 	private int age;
+	
 	public int getId() {
 		return id;
 	}
