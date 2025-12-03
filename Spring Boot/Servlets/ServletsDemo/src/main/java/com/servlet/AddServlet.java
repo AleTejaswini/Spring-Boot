@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,22 +20,27 @@ public class AddServlet extends HttpServlet{
 		int k = i+j;
 
 		 
-		req.setAttribute("k",k);
+//		req.setAttribute("k",k);
 //	
-		System.out.println(k); 
+//		System.out.println(k); 
 //		PrintWriter output = res.getWriter();
 //		output.println("result :" +k);
 //		
 //		
 //		
 //		//RequestDispatcher
-		RequestDispatcher rd = req.getRequestDispatcher("sq");
-		rd.include(req, res);
+//		RequestDispatcher rd = req.getRequestDispatcher("sq");
+//		rd.include(req, res);
 //		
 		
 //		res.sendRedirect("sq?k="+k);
 		
 		
+		
+		//Cookie
+		Cookie cookie = new Cookie("k",k + "");
+		res.addCookie(cookie);
+		res.sendRedirect("sq");
 		
 	}
 }
