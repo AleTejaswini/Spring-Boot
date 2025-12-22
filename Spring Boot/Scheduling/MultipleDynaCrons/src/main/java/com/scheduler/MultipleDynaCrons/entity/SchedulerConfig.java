@@ -1,43 +1,23 @@
 package com.scheduler.MultipleDynaCrons.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
-@Entity
+
+@Configuration
+@EnableScheduling
 public class SchedulerConfig {
-	@Id
-	private int id;
 	
-	private String taskname;
-	
-	private String cron;
-	private boolean isEnabled;
-	public int getId() {
-		return id;
+	@Bean
+	public TaskScheduler taskScehduler() {
+		ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+		scheduler.setPoolSize(10);
+		scheduler.initialize();
+		return scheduler;
+		
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getTaskname() {
-		return taskname;
-	}
-	public void setTaskname(String taskname) {
-		this.taskname = taskname;
-	}
-	public String getCron() {
-		return cron;
-	}
-	public void setCron(String cron) {
-		this.cron = cron;
-	}
-	public boolean isEnabled() {
-		return isEnabled;
-	}
-	public void setEnabled(boolean isEnabled) {
-		this.isEnabled = isEnabled;
-	}
-	
-	
-	
 	
 }

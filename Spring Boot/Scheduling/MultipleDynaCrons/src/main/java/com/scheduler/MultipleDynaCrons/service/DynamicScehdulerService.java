@@ -12,7 +12,8 @@ import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
-import com.scheduler.MultipleDynaCrons.entity.SchedulerConfig;
+import com.scheduler.MultipleDynaCrons.entity.Scheduler;
+
 import com.scheduler.MultipleDynaCrons.repository.DynamicSchedulerRepository;
 
 @Service
@@ -30,9 +31,9 @@ public class DynamicScehdulerService {
 	}
 
 	public void startAll() {
-		List<SchedulerConfig> tasks = repo.findAll();
+		List<Scheduler> tasks = repo.findAll();
 
-		for (SchedulerConfig task : tasks) {
+		for (Scheduler task : tasks) {
 			if (task.isEnabled()) {
 
 				CronTrigger trigger = new CronTrigger(task.getCron());

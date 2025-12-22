@@ -30,9 +30,5 @@ public class SchedulerController {
 		service.stopTask(id);
 		return "Task stopped";
 	}
-	@GetMapping("/startCorntask/{id}")
-	public String startcrontask(@PathVariable int id) {
-		service.startCornTask(id);
-		return "Corn task Started";
-	}
+	
 }

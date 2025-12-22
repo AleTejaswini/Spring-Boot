@@ -10,7 +10,8 @@ import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
-import com.schedulerconfig.SchedulerDB.repository.SchedulerConfigRepository;
+
+import com.schedulerconfig.SchedulerDB.repository.SchedulerRepository;
 
 @Service
 public class DynamicSchedulerService {
@@ -18,7 +19,7 @@ public class DynamicSchedulerService {
 	private final TaskScheduler  taskscheduler;
 	
 	@Autowired
-	private SchedulerConfigRepository repo;
+	private SchedulerRepository repo;
 	
 	private ScheduledFuture<?> scheduledTask;
 	
@@ -51,13 +52,5 @@ public class DynamicSchedulerService {
 	}
 
 	
-	// Crontrigger
-	public void startCornTask(int id) {
-		String corn = repo.findById(id).get().getCron();
-		
-		CronTrigger trigger = new CronTrigger(corn);
-		scheduledTask = taskscheduler
-				.schedule(()->run(id), trigger);
-		
-	}
+	
 }
