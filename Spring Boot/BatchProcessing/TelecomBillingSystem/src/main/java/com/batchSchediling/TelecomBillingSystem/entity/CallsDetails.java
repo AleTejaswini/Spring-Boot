@@ -3,31 +3,31 @@ package com.batchSchediling.TelecomBillingSystem.entity;
 import java.time.LocalDate;
 import java.util.Date;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
 @Entity
+@Table(name = "calls_details")
 public class CallsDetails {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	private String mobilenum;
-	private LocalDate  call_date;
+	 @Column(name = "call_date")
+	    private LocalDate callDate;
 	public int total_duration;
 	private int incoming_call_count;
 	private int outgoing_call_count;
 	private double total_bill_amount;
-	private String call_type;
-	public String getCall_type() {
-		return call_type;
-	}
-	public void setCall_type(String call_type) {
-		this.call_type = call_type;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	
+	
+	
 	public String getMobilenum() {
 		return mobilenum;
 	}
@@ -35,11 +35,12 @@ public class CallsDetails {
 		this.mobilenum = mobilenum;
 	}
 	
-	public LocalDate getCall_date() {
-		return call_date;
+	
+	public LocalDate getCallDate() {
+		return callDate;
 	}
-	public void setCall_date(LocalDate call_date) {
-		this.call_date = call_date;
+	public void setCallDate(LocalDate callDate) {
+		this.callDate = callDate;
 	}
 	public int getTotal_duration() {
 		return total_duration;
@@ -65,10 +66,17 @@ public class CallsDetails {
 	public void setTotal_bill_amount(double total_bill_amount) {
 		this.total_bill_amount = total_bill_amount;
 	}
-	public CallsSummary() {
+	public CallsDetails() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	
 	
 
