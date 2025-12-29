@@ -12,7 +12,7 @@ public class Transactions {
 	private String date;
 	private String type;
 	private double amount;
-	private double balance;
+//	private double balance;
 	private String status;
 	public int getId() {
 		return id;
@@ -44,12 +44,7 @@ public class Transactions {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-	public double getBalance() {
-		return balance;
-	}
-	public void setBalance(double balance) {
-		this.balance = balance;
-	}
+	
 	public String getStatus() {
 		return status;
 	}

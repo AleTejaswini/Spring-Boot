@@ -40,7 +40,7 @@ public class BatchConfig {
 		reader.setLineMapper(new DefaultLineMapper<>() {{
 			setLineTokenizer(new DelimitedLineTokenizer() {{
 				setDelimiter(",");
-				setNames("id","AccountNo","date","type","amount","balance","status");
+				setNames("id","AccountNo","date","type","amount","status");
 			}});
 			
 			setFieldSetMapper(new BeanWrapperFieldSetMapper<>() {{
