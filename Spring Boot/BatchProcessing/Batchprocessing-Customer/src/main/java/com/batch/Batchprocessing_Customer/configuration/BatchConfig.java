@@ -16,9 +16,11 @@ import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -26,7 +28,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import com.batch.Batchprocessing_Customer.entity.Customer;
 import com.batch.Batchprocessing_Customer.partitioning.ColumnrangePartitioning;
 import com.batch.Batchprocessing_Customer.repository.CustomerRepository;
-import com.batch.Batchprocessing_Customer.writer.CustomerWriter;
+
 import com.batch.Batchprocessing_Customer.processor.CustomerProcessor;
 @Configuration
 public class BatchConfig {
@@ -43,10 +45,19 @@ public class BatchConfig {
 
     @Bean
     @StepScope
-    public FlatFileItemReader<Customer> reader() {
+    public FlatFileItemReader<Customer> reader(
+            @Value("#{jobParameters['filePath']}") String filePath,
+            @Value("#{stepExecutionContext['start']}") Integer start,
+            @Value("#{stepExecutionContext['end']}") Integer end) {
+
         FlatFileItemReader<Customer> reader = new FlatFileItemReader<>();
-        reader.setResource(new ClassPathResource("customers.csv"));
-        reader.setLinesToSkip(1);
+
+        reader.setResource(new FileSystemResource(filePath));
+
+        // IMPORTANT:
+        // start = actual CSV line number
+        // so skip (start - 1)
+        reader.setLinesToSkip(start - 1);
 
         reader.setLineMapper(new DefaultLineMapper<>() {{
             setLineTokenizer(new DelimitedLineTokenizer() {{
@@ -58,8 +69,12 @@ public class BatchConfig {
             }});
         }});
 
+        // Read only assigned range
+        reader.setMaxItemCount(end - start + 1);
+
         return reader;
     }
+
 
     
     @Bean
@@ -67,26 +82,41 @@ public class BatchConfig {
         return new CustomerProcessor();
     }
     @Bean
-    public CustomerWriter writer() {
-        return new CustomerWriter();
+    public RepositoryItemWriter<Customer> writer() {
+        RepositoryItemWriter<Customer> writer = new RepositoryItemWriter<>();
+        writer.setRepository(customerRepo);
+        writer.setMethodName("save");
+        return writer;
     }
-   
-//    @Bean
-//    public RepositoryItemWriter<Customer> writer() {
-//        RepositoryItemWriter<Customer> writer = new RepositoryItemWriter<>();
-//        writer.setRepository(customerRepo);
-//        writer.setMethodName("save");
-//        return writer;
-//    }
     
-    
+    @Bean
+    public Step slaveStep() {
+        return new StepBuilder("slaveStep", jobRepository)
+                .<Customer, Customer>chunk(50, transactionManager)
+                .reader(reader(null, null, null))
+                .processor(processor())
+                .writer(writer())
+                .faultTolerant()
+                .skip(IllegalArgumentException.class)
+                .skipLimit(10)
+                .build();
+    }
+
+    @Bean
+    public Step masterStep() {
+        return new StepBuilder("masterStep", jobRepository)
+                .partitioner("slaveStep", partitioner())
+                .step(slaveStep())
+                .gridSize(5)
+                .taskExecutor(taskExecutor())
+                .build();
+    }
 
     
     @Bean
     public Partitioner partitioner() {
-        return new ColumnrangePartitioning();
+        return new ColumnrangePartitioning(); // must set startLine & endLine
     }
-
    
     @Bean
     public TaskExecutor taskExecutor() {
@@ -99,34 +129,6 @@ public class BatchConfig {
     }
 
    
-    @Bean
-    public Step slaveStep() {
-        return new StepBuilder("slaveStep", jobRepository)
-                .<Customer, Customer>chunk(50, transactionManager)
-                .reader(reader())
-                .processor(processor())
-                .writer(writer())
-                .build();
-    }
-
-    
-    @Bean
-    public PartitionHandler partitionHandler() {
-        TaskExecutorPartitionHandler handler = new TaskExecutorPartitionHandler();
-        handler.setStep(slaveStep());
-        handler.setTaskExecutor(taskExecutor());
-        handler.setGridSize(2);
-        return handler;
-    }
-
-   
-    @Bean
-    public Step masterStep() {
-        return new StepBuilder("masterStep", jobRepository)
-                .partitioner("slaveStep", partitioner())
-                .partitionHandler(partitionHandler())
-                .build();
-    }
 
     @Bean
     public Job job() {
@@ -135,4 +137,7 @@ public class BatchConfig {
                 .start(masterStep())
                 .build();
     }
+
+
+	
 }
