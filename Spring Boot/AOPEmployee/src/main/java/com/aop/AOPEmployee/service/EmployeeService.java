@@ -9,6 +9,10 @@ public class EmployeeService {
 
 	public Employee createemployee(int empid,String firstname,String lastname) {
 		
+		
+		if(empid<=0) {
+			throw new RuntimeException("Invalid id");
+		}
 		Employee emp = new Employee();
 		emp.setEmpId(empid);
 		emp.setFirstname(firstname);
