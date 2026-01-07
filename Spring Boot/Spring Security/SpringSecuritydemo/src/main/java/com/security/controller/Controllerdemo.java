@@ -10,4 +10,14 @@ public class Controllerdemo {
 	public String  welcome() {
 		return "Welcome to Spring security";
 	}
+	
+	@GetMapping("/public/hello")
+	public String hello() {
+		return "Hello public -No login";
+	}
+	
+	@GetMapping("/secure/hello")
+	public String secure() {
+		return "Hello public - with login";
+	}
 }
